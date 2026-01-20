@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renseignement - Application Sécurisée</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* VOTRE CSS COMPLET ICI */
+        :root {
+            --primary-color: #2e7d32;
+            --primary-light: #4caf50;
+            --primary-dark: #1b5e20;
+            --bg-color: #e3f2fd;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #90caf9;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --success: #4caf50;
+            --warning: #ff9800;
+            --danger: #f44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-bottom: 4px solid var(--primary-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 900;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #555;
+            font-size: 1.1rem;
+        }
+        
+        .app-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 992px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+        }
+        
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .section-content {
+            padding: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background-color: #f8fdff;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+            background-color: white;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            flex: 1;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .btn-secondary {
+            background-color: #607d8b;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #455a64;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #d32f2f;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #388e3c;
+            transform: translateY(-2px);
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #f8fdff;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+        }
+        
+        .community-list {
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background-color: #f8fdff;
+        }
+        
+        .community-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .community-item:hover {
+            background-color: #e1f5fe;
+        }
+        
+        .community-item.active {
+            background-color: #e8f5e9;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .person-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--primary-dark);
+        }
+        
+        .person-id {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            font-size: 1.1rem;
+            padding: 5px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover {
+            color: var(--primary-color);
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .action-btn.delete:hover {
+            color: var(--danger);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        
+        .modal-title {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .close-modal:hover {
+            color: var(--danger);
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--primary-dark);
+            min-width: 150px;
+        }
+        
+        .detail-value {
+            flex: 1;
+            color: #555;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #777;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #b0bec5;
+        }
+        
+        .empty-state p {
+            font-size: 1.1rem;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+        
+        .community-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .community-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        .community-list::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 4px;
+        }
+        
+        .community-list::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .cnib-format {
+            display: inline-block;
+            background-color: #e8f5e9;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-left: 5px;
+            letter-spacing: 1px;
+        }
+        
+        .cnib-example {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .detail-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+            
+            .detail-label {
+                min-width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-user-shield"></i> Renseignement</h1>
+            <p class="subtitle">Application de collecte et gestion des informations d'identité</p>
+        </header>
+        
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-value" id="total-members">0</div>
+                <div class="stat-label">Membres enregistrés</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="today-added">0</div>
+                <div class="stat-label">Ajoutés aujourd'hui</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="last-update">-</div>
+                <div class="stat-label">Dernière mise à jour</div>
+            </div>
+        </div>
+        
+        <div class="app-container">
+            <div class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-id-card"></i> Identity - Formulaire
+                </div>
+                <div class="section-content">
+                    <form id="identity-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="lastname"><i class="fas fa-user"></i> Nom :</label>
+                                <input type="text" id="lastname" placeholder="Ex: TRAORE" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname"><i class="fas fa-user"></i> Prénom :</label>
+                                <input type="text" id="firstname" placeholder="Ex: Issa" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="cnib"><i class="fas fa-id-card"></i> Numéro CNIB :</label>
+                            <input type="text" id="cnib" placeholder="Ex: A12345678" required 
+                                   pattern="[A-Za-z]{1}[0-9]{8}" 
+                                   title="Format CNIB: 1 lettre suivie de 8 chiffres (ex: A12345678)"
+                                   maxlength="9">
+                            <small style="color: #666; font-size: 0.9rem;">
+                                Format: <span class="cnib-format">Lettre + 8 chiffres</span>
+                                <span class="cnib-example">Exemples: A12345678, B87654321, C98765432</span>
+                            </small>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthdate"><i class="fas fa-birthday-cake"></i> Date de naissance :</label>
+                                <input type="date" id="birthdate" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="gender"><i class="fas fa-venus-mars"></i> Sexe :</label>
+                                <select id="gender" required>
+                                    <option value="">Sélectionner</option>
+                                    <option value="M">Masculin</option>
+                                    <option value="F">Féminin</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Numéro de téléphone :</label>
+                            <input type="tel" id="phone" placeholder="Ex: +226 70 12 34 56" required 
+                                   pattern="\+226[0-9\s]{9,}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address"><i class="fas fa-home"></i> Adresse :</label>
+                            <input type="text" id="address" placeholder="Ex: Ouagadougou, Secteur 15" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profession"><i class="fas fa-briefcase"></i> Profession :</label>
+                            <input type="text" id="profession" placeholder="Ex: Commerçant">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Enregistrer
+                            </button>
+                            <button type="reset" class="btn btn-secondary" id="reset-btn">
+                                <i class="fas fa-redo"></i> Réinitialiser
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="section-card">
+                <div class="section-header">
+                    <i class="fas fa-users"></i> Communauté
+                </div>
+                <div class="section-content">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" id="search-input" 
+                               placeholder="Rechercher par nom, prénom ou CNIB...">
+                    </div>
+                    
+                    <div class="community-list" id="community-list">
+                        <div class="empty-state" id="empty-list">
+                            <i class="fas fa-users-slash"></i>
+                            <p>Aucun membre enregistré pour le moment</p>
+                            <p style="margin-top: 10px; font-size: 0.9rem;">Utilisez le formulaire pour ajouter des membres</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal" id="detail-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title"><i class="fas fa-user-circle"></i> Détails du membre</h3>
+                    <button class="close-modal" id="close-modal">&times;</button>
+                </div>
+                <div id="modal-body"></div>
+                <div class="form-actions" style="margin-top: 20px;">
+                    <button class="btn btn-danger" id="delete-modal-btn">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
+                    <button class="btn btn-secondary" id="close-detail-btn">
+                        <i class="fas fa-times"></i> Fermer
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Application "Renseignement" &copy; 2023 - Collecte sécurisée des informations d'identité</p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">
+                <i class="fas fa-shield-alt"></i> Les données sont stockées localement dans votre navigateur
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // VOTRE JAVASCRIPT COMPLET ICI
+        document.addEventListener('DOMContentLoaded', function() {
+            const identityForm = document.getElementById('identity-form');
+            const communityList = document.getElementById('community-list');
+            const searchInput = document.getElementById('search-input');
+            const detailModal = document.getElementById('detail-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const closeDetailBtn = document.getElementById('close-detail-btn');
+            const deleteModalBtn = document.getElementById('delete-modal-btn');
+            const modalBody = document.getElementById('modal-body');
+            const emptyList = document.getElementById('empty-list');
+            const resetBtn = document.getElementById('reset-btn');
+            
+            const totalMembersEl = document.getElementById('total-members');
+            const todayAddedEl = document.getElementById('today-added');
+            const lastUpdateEl = document.getElementById('last-update');
+            
+            let members = JSON.parse(localStorage.getItem('renseignement_members')) || [];
+            let today = new Date().toDateString();
+            let todayCount = 0;
+            let currentMemberId = null;
+            
+            function initApp() {
+                todayCount = members.filter(member => member.registrationDate === today).length;
+                updateStats();
+                renderCommunityList(members);
+                
+                const todayDate = new Date();
+                const maxDate = new Date(todayDate.getFullYear() - 18, todayDate.getMonth(), todayDate.getDate());
+                document.getElementById('birthdate').max = maxDate.toISOString().split('T')[0];
+                
+                document.getElementById('cnib').addEventListener('input', function(e) {
+                    this.value = this.value.toUpperCase();
+                });
+                
+                document.getElementById('lastname').addEventListener('input', function(e) {
+                    this.value = this.value.toUpperCase();
+                });
+            }
+            
+            function updateStats() {
+                totalMembersEl.textContent = members.length;
+                todayAddedEl.textContent = todayCount;
+                
+                if (members.length > 0) {
+                    const lastMember = members[members.length - 1];
+                    lastUpdateEl.textContent = formatDate(lastMember.registrationDate);
+                }
+            }
+            
+            function formatDate(dateString) {
+                if (!dateString) return '-';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('fr-FR');
+            }
+            
+            function formatCNIBDisplay(cnib) {
+                if (!cnib) return '';
+                const letter = cnib.charAt(0);
+                const numbers = cnib.substring(1);
+                return `${letter} ${numbers}`;
+            }
+            
+            identityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const cnibValue = document.getElementById('cnib').value.trim().toUpperCase();
+                
+                if (!/^[A-Z]{1}[0-9]{8}$/.test(cnibValue)) {
+                    alert('Format CNIB invalide! Utilisez: 1 lettre + 8 chiffres (ex: A12345678)');
+                    document.getElementById('cnib').focus();
+                    return;
+                }
+                
+                const member = {
+                    id: Date.now().toString(),
+                    lastname: document.getElementById('lastname').value.trim().toUpperCase(),
+                    firstname: document.getElementById('firstname').value.trim(),
+                    cnib: cnibValue,
+                    birthdate: document.getElementById('birthdate').value,
+                    gender: document.getElementById('gender').value,
+                    phone: document.getElementById('phone').value.trim(),
+                    address: document.getElementById('address').value.trim(),
+                    profession: document.getElementById('profession').value.trim() || 'Non spécifié',
+                    registrationDate: new Date().toDateString()
+                };
+                
+                const existingMember = members.find(m => m.cnib === member.cnib);
+                if (existingMember) {
+                    alert(`CNIB ${formatCNIBDisplay(member.cnib)} existe déjà pour ${existingMember.firstname} ${existingMember.lastname}`);
+                    return;
+                }
+                
+                members.push(member);
+                localStorage.setItem('renseignement_members', JSON.stringify(members));
+                
+                if (member.registrationDate === today) todayCount++;
+                
+                updateStats();
+                renderCommunityList(members);
+                identityForm.reset();
+                
+                setTimeout(() => {
+                    const newItem = document.querySelector(`[data-id="${member.id}"]`);
+                    if (newItem) {
+                        newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        newItem.classList.add('active');
+                        setTimeout(() => newItem.classList.remove('active'), 2000);
+                    }
+                }, 100);
+            });
+            
+            resetBtn.addEventListener('click', function() {
+                identityForm.reset();
+            });
+            
+            function renderCommunityList(memberList) {
+                communityList.innerHTML = '';
+                
+                if (memberList.length === 0) {
+                    const emptyState = emptyList.cloneNode(true);
+                    communityList.appendChild(emptyState);
+                    return;
+                }
+                
+                memberList.forEach(member => {
+                    const item = document.createElement('div');
+                    item.className = 'community-item fade-in';
+                    item.setAttribute('data-id', member.id);
+                    
+                    item.innerHTML = `
+                        <div>
+                            <div class="person-name">${member.firstname} ${member.lastname}</div>
+                            <div class="person-id">
+                                <strong>CNIB:</strong> ${formatCNIBDisplay(member.cnib)} | 
+                                <strong>Tél:</strong> ${member.phone}
+                            </div>
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-btn view" title="Voir les détails">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn delete" title="Supprimer">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                    
+                    item.querySelector('.view').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        showMemberDetails(member.id);
+                    });
+                    
+                    item.querySelector('.delete').addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        deleteMember(member.id);
+                    });
+                    
+                    item.addEventListener('click', () => {
+                        showMemberDetails(member.id);
+                    });
+                    
+                    communityList.appendChild(item);
+                });
+            }
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                if (!searchTerm) {
+                    renderCommunityList(members);
+                    return;
+                }
+                
+                const filteredMembers = members.filter(member => {
+                    return (
+                        member.lastname.toLowerCase().includes(searchTerm) ||
+                        member.firstname.toLowerCase().includes(searchTerm) ||
+                        member.cnib.toLowerCase().includes(searchTerm) ||
+                        member.phone.includes(searchTerm)
+                    );
+                });
+                
+                renderCommunityList(filteredMembers);
+            });
+            
+            function showMemberDetails(memberId) {
+                const member = members.find(m => m.id === memberId);
+                if (!member) return;
+                
+                currentMemberId = memberId;
+                
+                const birthDate = new Date(member.birthdate);
+                const todayDate = new Date();
+                let age = todayDate.getFullYear() - birthDate.getFullYear();
+                const monthDiff = todayDate.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && todayDate.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                
+                const formattedBirthdate = new Date(member.birthdate).toLocaleDateString('fr-FR');
+                
+                modalBody.innerHTML = `
+                    <div class="detail-row">
+                        <div class="detail-label">Nom complet :</div>
+                        <div class="detail-value">${member.firstname} ${member.lastname}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">CNIB :</div>
+                        <div class="detail-value">
+                            <span class="cnib-format">${formatCNIBDisplay(member.cnib)}</span>
+                        </div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date de naissance :</div>
+                        <div class="detail-value">${formattedBirthdate} (${age} ans)</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Sexe :</div>
+                        <div class="detail-value">${member.gender === 'M' ? 'Masculin' : 'Féminin'}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Téléphone :</div>
+                        <div class="detail-value">${member.phone}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Adresse :</div>
+                        <div class="detail-value">${member.address}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Profession :</div>
+                        <div class="detail-value">${member.profession}</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Date d'enregistrement :</div>
+                        <div class="detail-value">${formatDate(member.registrationDate)}</div>
+                    </div>
+                `;
+                
+                detailModal.style.display = 'flex';
+            }
+            
+            function deleteMember(memberId) {
+                if (!confirm("Êtes-vous sûr de vouloir supprimer ce membre ? Cette action est irréversible.")) {
+                    return;
+                }
+                
+                const memberIndex = members.findIndex(m => m.id === memberId);
+                if (memberIndex === -1) return;
+                
+                const deletedMember = members[memberIndex];
+                
+                members.splice(memberIndex, 1);
+                localStorage.setItem('renseignement_members', JSON.stringify(members));
+                
+                if (deletedMember.registrationDate === today) {
+                    todayCount = Math.max(0, todayCount - 1);
+                }
+                
+                updateStats();
+                renderCommunityList(members);
+                detailModal.style.display = 'none';
+            }
+            
+            closeModalBtn.addEventListener('click', () => {
+                detailModal.style.display = 'none';
+            });
+            
+            closeDetailBtn.addEventListener('click', () => {
+                detailModal.style.display = 'none';
+            });
+            
+            deleteModalBtn.addEventListener('click', () => {
+                if (currentMemberId) {
+                    deleteMember(currentMemberId);
+                }
+            });
+            
+            detailModal.addEventListener('click', (e) => {
+                if (e.target === detailModal) {
+                    detailModal.style.display = 'none';
+                }
+            });
+            
+            // Données d'exemple
+            if (members.length === 0) {
+                const exampleMembers = [
+                    {
+                        id: "1",
+                        lastname: "TRAORE",
+                        firstname: "Amadou",
+                        cnib: "A12345678",
+                        birthdate: "1985-05-15",
+                        gender: "M",
+                        phone: "+226 70 12 34 56",
+                        address: "Ouagadougou, Secteur 15",
+                        profession: "Commerçant",
+                        registrationDate: today
+                    },
+                    {
+                        id: "2",
+                        lastname: "OUEDRAOGO",
+                        firstname: "Fatimata",
+                        cnib: "B87654321",
+                        birthdate: "1990-11-22",
+                        gender: "F",
+                        phone: "+226 76 98 76 54",
+                        address: "Bobo-Dioulasso, Dafra",
+                        profession: "Enseignante",
+                        registrationDate: today
+                    }
+                ];
+                
+                members = exampleMembers;
+                localStorage.setItem('renseignement_members', JSON.stringify(members));
+                todayCount = 2;
+                initApp();
+            }
+        });
+    </script>
+</body>
+</html>
